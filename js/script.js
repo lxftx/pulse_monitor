@@ -120,17 +120,36 @@ $(document).ready(function(){
     if (!$(this).valid()) {
       return;
     }
-    console.log("Hello, epta!")
+    console.log("Hello, epta!");
     $.ajax({
       type: "POST",
       url: "mailer/smart.php",
       data: $(this).serialize()
     }).done(function() {
       $(this).find("input").val("");
-
-
+      $('#consultation, #order').fadeOut();
+      $('.overlay, #thanks').fadeIn();
       $('form').trigger('reset');
     });
     return false;
   });
+
+  // Скролл верх
+
+  $(window).scroll(function(e) {
+    if ($(this).scrollTop() > 1600) {
+      $('.pageup').fadeIn();
+    } else {
+      $('.pageup').fadeOut();
+    }
+  });
+
+  $("a[href^='#'").click(function() {
+    const _href = $(this).attr("href");
+    $("html, body").animate({
+      scrollTop: $(_href).offset().top+"px"
+    });
+  });
+
+  new WOW().init();
 });
